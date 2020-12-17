@@ -18,11 +18,13 @@ public class TZController {
     @PostMapping("/rest/")
     public ResponseEntity<Map<BigInteger, Integer>> dataRetrieval(@RequestBody List<BigInteger> numbers) {
         for (BigInteger key : numbers) {
-            if (numberOfRepetitions.get(key) == null) {
-                numberOfRepetitions.put(key, 1);
-            } else {
-                int count = numberOfRepetitions.get(key);
-                numberOfRepetitions.put(key, count + 1);
+            if (key.isProbablePrime(10)) {
+                if (numberOfRepetitions.get(key) == null) {
+                    numberOfRepetitions.put(key, 1);
+                } else {
+                    int count = numberOfRepetitions.get(key);
+                    numberOfRepetitions.put(key, count + 1);
+                }
             }
         }
         return new ResponseEntity<>(numberOfRepetitions, HttpStatus.OK);
